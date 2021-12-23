@@ -4,7 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/university/android/_projects/Notes_app_room_Database/app/src/main/res/layout/activity_main.xml" value="0.152" />
-        <entry key="..\:/university/android/_projects/Notes_app_room_Database/app/src/main/res/layout/note_list.xml" value="0.12407407407407407" />
+        <entry key="..\:/university/android/_projects/Notes_app_room_Database/app/src/main/res/layout/activity_notes_taker.xml" value="0.136" />
+        <entry key="..\:/university/android/_projects/Notes_app_room_Database/app/src/main/res/layout/note_list.xml" value="0.176" />
       </map>
     </option>
   </component>
