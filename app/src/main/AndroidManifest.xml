@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Notes_app_room_Database">
         <activity
+            android:name=".NotesTaker_Activity"
+            android:theme="@style/Theme.Notes_app_room_Database.NoActionbar"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
