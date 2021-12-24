@@ -6,11 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+  <androidx.appcompat.widget.SearchView
+      android:id="@+id/search_view_home_id"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:layout_alignParentTop="true"
+      app:queryHint="Search Notes"
+      app:iconifiedByDefault="false"/>
+
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_home_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/search_view_home_id"
         android:layout_margin="8dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

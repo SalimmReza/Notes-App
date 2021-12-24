@@ -2,6 +2,7 @@ package com.example.notes_app_room_database;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fabb_add;
 
 
+
+    SearchView search_view_home;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_home_id);
         fabb_add = findViewById(R.id.fab_add_id);
+        search_view_home= findViewById(R.id.search_view_home_id);
 
         database = Room_DB.getInstance(this);
         notes = database.main_dao().get_all();
@@ -54,7 +60,60 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+      /*  search_view_home.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filter(newText);
+                return true;
+            }
+        });
+    }*/
+          search_view_home.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filter(newText);
+                return true;
+            }
+        });
     }
+
+    private void filter(String newText) {
+        List<Notess> filtered_list = new ArrayList<>();
+        for (Notess single_notes : notes)
+        {
+            if (single_notes.getTitle().toLowerCase().contains(newText.toLowerCase())
+            || single_notes.getNotes().toLowerCase().contains(newText.toLowerCase()))
+            {
+                filtered_list.add(single_notes);
+            }
+        }
+        notes_list_adapter.filter_list(filtered_list);
+    }
+
+  /*  private void filter(String newText) {
+        List<Notess> filtered_list = new ArrayList<>();
+        for (Notess single_notes : notes)
+        {
+            if (single_notes.getTitle().toLowerCase().contains(newText.toLowerCase())
+                    || single_notes.getNotes().toLowerCase().contains(newText.toLowerCase()))
+            {
+                filtered_list.add(single_notes);
+            }
+        }
+        notes_list_adapter.filter_list(filtered_list);
+    }*/
+
 
     //work id for calling the notes taker activity
 
