@@ -20,6 +20,7 @@ public class NotesTaker_Activity extends AppCompatActivity {
     private EditText n_title, n_notes;
   private  ImageView n_save;
   Notess notess;
+
   boolean is_old_note = false;
 
     @Override
@@ -32,7 +33,10 @@ public class NotesTaker_Activity extends AppCompatActivity {
         n_notes= findViewById(R.id.edittext_notes_id);
         n_save= findViewById(R.id.image_view_save_id);
 
-        notess = new Notess();
+
+
+
+          notess = new Notess();
         try {
             notess = (Notess) getIntent().getSerializableExtra("old_notes");
             n_title.setText(notess.getTitle());
@@ -43,7 +47,6 @@ public class NotesTaker_Activity extends AppCompatActivity {
         {
             e.printStackTrace();
         }
-
 
 
         n_save.setOnClickListener(new View.OnClickListener() {

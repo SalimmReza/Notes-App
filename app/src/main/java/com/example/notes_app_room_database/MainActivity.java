@@ -74,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        else if(requestCode==102)
+
+         else if(requestCode==102)
         {
             if (resultCode==Activity.RESULT_OK)
             {
@@ -99,7 +100,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void Onclick(Notess notess) {
 
-            Intent intent = new Intent(MainActivity.this, NotesTaker_Activity.class);
+
+             Intent intent = new Intent(MainActivity.this, NotesTaker_Activity.class);
             intent.putExtra("old_notes", notess);
             startActivityForResult(intent, 102);
         }
