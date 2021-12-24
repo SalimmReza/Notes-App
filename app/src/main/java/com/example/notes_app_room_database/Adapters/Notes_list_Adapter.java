@@ -98,11 +98,22 @@ public class Notes_list_Adapter extends RecyclerView.Adapter<notes_view_holder>{
         return list.size();
     }
 
- public void filter_list(List<Notess> filtered_list)
- {
-     list= filtered_list;
-     notifyDataSetChanged();
- }
+
+
+
+    public void filter_list(List<Notess> filtered_list)
+    {
+        list= filtered_list;
+        notifyDataSetChanged();
+    }
+
+
+
+  /*  public void filter_list(List<Notess> filtered_list)
+    {
+        list= filtered_list;
+        notifyDataSetChanged();
+    }*/
 }
 
 
