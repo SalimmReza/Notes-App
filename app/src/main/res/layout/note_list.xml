@@ -30,11 +30,12 @@
                 android:ellipsize="marquee"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:padding="8dp"
+                android:textAllCaps="true"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:text="title"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ImageView

@@ -2,17 +2,22 @@ package com.example.notes_app_room_database;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.room.RoomDatabase;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.notes_app_room_database.Adapters.Notes_list_Adapter;
 import com.example.notes_app_room_database.Database.Room_DB;
@@ -23,17 +28,19 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenuItemClickListener{
 
     RecyclerView recyclerView;
     Notes_list_Adapter notes_list_adapter;
     List<Notess> notes = new ArrayList<>();
     Room_DB database;
     FloatingActionButton fabb_add;
-
-
-
     SearchView search_view_home;
+
+    Notess selected_note;
+
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
 
     @Override
@@ -44,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_home_id);
         fabb_add = findViewById(R.id.fab_add_id);
         search_view_home= findViewById(R.id.search_view_home_id);
+        swipeRefreshLayout=findViewById(R.id.swipe_layout_id);
 
         database = Room_DB.getInstance(this);
         notes = database.main_dao().get_all();
@@ -86,6 +94,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+          swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+              @Override
+              public void onRefresh() {
+
+                  swipeRefreshLayout.setRefreshing(false);
+                  notes_list_adapter.notifyDataSetChanged();
+              }
+          });
     }
 
     private void filter(String newText) {
@@ -167,8 +185,52 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void Onlongclick(Notess notess, CardView cardView) {
+            selected_note = new Notess();
+            selected_note = notess;
+            show_pop_up(cardView);
 
         }
     };
 
+    private void show_pop_up(CardView cardView) {
+        PopupMenu popupMenu = new PopupMenu(this, cardView);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.popup_menu);
+        popupMenu.show();
+
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch(item.getItemId())
+        {
+            case R.id.pin_id:
+                if (selected_note.isPin())
+                {
+                    database.main_dao().pin(selected_note.getID(), false);
+                    Toast.makeText(MainActivity.this, "UnPinned", Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    database.main_dao().pin(selected_note.getID(), true);
+                    Toast.makeText(MainActivity.this, "Pinned", Toast.LENGTH_SHORT).show();
+
+                }
+                notes.clear();
+                notes.addAll(database.main_dao().get_all());
+                notes_list_adapter.notifyDataSetChanged();
+                return true;
+
+            case R.id.delete_id:
+                database.main_dao().delete(selected_note);
+                notes.remove(selected_note);
+                notes_list_adapter.notifyDataSetChanged();
+                Toast.makeText(MainActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return false;
+
+        }
+
+
+    }
 }
