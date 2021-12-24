@@ -73,6 +73,18 @@ public class MainActivity extends AppCompatActivity {
                notes_list_adapter.notifyDataSetChanged();
             }
         }
+
+        else if(requestCode==102)
+        {
+            if (resultCode==Activity.RESULT_OK)
+            {
+                Notess new_notes= (Notess) data.getSerializableExtra("notes");
+                database.main_dao().update(new_notes.getID(), new_notes.getTitle(), new_notes.getNotes());
+                notes.clear();
+                notes.addAll(database.main_dao().get_all());
+                notes_list_adapter.notifyDataSetChanged();
+            }
+        }
     }
 
     private void update_recycler(List<Notess> notes) {
@@ -87,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void Onclick(Notess notess) {
 
+            Intent intent = new Intent(MainActivity.this, NotesTaker_Activity.class);
+            intent.putExtra("old_notes", notess);
+            startActivityForResult(intent, 102);
         }
 
         @Override
